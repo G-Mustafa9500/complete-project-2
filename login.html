@@ -6,6 +6,35 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="style.css"/>
+<style>
+  .auth-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #e7e5e4;
+  }
+  .auth-tab {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background: none;
+    border: none;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #a8a29e;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+  }
+  .auth-tab:hover { color: #57534e; }
+  .auth-tab.active {
+    color: #1c1917;
+    border-bottom-color: #0d9488;
+  }
+  .auth-form { display: none; }
+  .auth-form.active { display: block; }
+</style>
 </head>
 <body>
 <div id="toast" class="toast"></div>
@@ -18,85 +47,100 @@
   </div>
 </header>
 
-<div class="login-wrap container">
-  <div class="grid-2" style="max-width:960px;margin:0 auto;width:100%;">
-    <div class="hero-grad">
-      <div class="hero-content" style="display:flex;flex-direction:column;justify-content:center;height:100%;">
-        <p class="label" style="color:#a8a29e;margin-bottom:12px;">COMMUNITY ACCESS</p>
-        <h1 style="font-size:clamp(24px,4vw,36px);font-weight:900;color:#fff;line-height:1.1;margin-bottom:1.25rem;">Enter the support network.</h1>
-        <p style="font-size:14px;color:#d6d3d1;line-height:1.7;margin-bottom:2rem;">Choose a demo identity, set your role, and enter a full multi-page product flow with real persistence.</p>
-        <div style="display:flex;flex-direction:column;gap:1rem;">
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div style="width:28px;height:28px;border-radius:99px;background:var(--teal-600);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px;flex-shrink:0;">✓</div>
-            <span style="font-size:14px;color:#d6d3d1;">Role-based entry with instant dashboard access</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div style="width:28px;height:28px;border-radius:99px;background:var(--teal-600);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px;flex-shrink:0;">✓</div>
-            <span style="font-size:14px;color:#d6d3d1;">Jump directly into any module from the dashboard</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div style="width:28px;height:28px;border-radius:99px;background:var(--teal-600);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px;flex-shrink:0;">✓</div>
-            <span style="font-size:14px;color:#d6d3d1;">Local storage-driven demo session with real data</span>
+<div class="page" id="page-login">
+  <div class="login-wrap container">
+    <div class="grid-2" style="max-width:960px;margin:0 auto;width:100%;">
+
+      <!-- LEFT — Hero Panel -->
+      <div class="hero-grad">
+        <div class="hero-content" style="display:flex;flex-direction:column;justify-content:center;">
+          <p class="label" style="color:#a8a29e;margin-bottom:12px;">COMMUNITY ACCESS</p>
+          <h1 style="font-size:clamp(24px,4vw,36px);font-weight:900;color:#fff;line-height:1.1;margin-bottom:1.25rem;">Enter the support network.</h1>
+          <p style="font-size:14px;color:#d6d3d1;line-height:1.7;margin-bottom:2rem;">Sign in with your credentials or create a new account to access the full platform with real data persistence.</p>
+          <div style="display:flex;flex-direction:column;gap:1rem;">
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="width:28px;height:28px;border-radius:99px;background:#0d9488;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px;flex-shrink:0;">✓</div>
+              <span style="font-size:14px;color:#d6d3d1;line-height:1.5;">Role-based entry with instant dashboard access</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="width:28px;height:28px;border-radius:99px;background:#0d9488;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px;flex-shrink:0;">✓</div>
+              <span style="font-size:14px;color:#d6d3d1;line-height:1.5;">Jump directly into any module from the dashboard</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="width:28px;height:28px;border-radius:99px;background:#0d9488;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px;flex-shrink:0;">✓</div>
+              <span style="font-size:14px;color:#d6d3d1;line-height:1.5;">Local storage-driven session with real data</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="glass p-6">
-      <h2 style="font-size:26px;font-weight:800;margin-bottom:.25rem;line-height:1.3;">Authenticate your community profile</h2>
-      <p style="font-size:14px;color:var(--text-500);margin-bottom:2rem;">Select a demo user or create a new account.</p>
-      <div class="space-5">
-        <div>
-          <label class="field-label">Username</label>
-          <select class="field" id="loginUser" onchange="onDemoUserChange()">
-            <option value="">— Select a demo user —</option>
-            <option value="u1">Ayesha Khan</option>
-            <option value="u2">Hassan Ali</option>
-            <option value="u3">Sara Noor</option>
-            <option value="new">+ Create new account</option>
-          </select>
+
+      <!-- RIGHT — Auth Forms -->
+      <div style="padding:2.5rem;display:flex;flex-direction:column;justify-content:center;">
+        <h2 style="font-size:24px;font-weight:900;margin-bottom:0.5rem;">Get started</h2>
+        <p style="font-size:14px;color:var(--text-500);margin-bottom:1.5rem;">Sign in to your account or create a new one.</p>
+
+        <div class="auth-tabs">
+          <button id="tabLogin" class="auth-tab active" onclick="switchTab('login')">Sign In</button>
+          <button id="tabSignup" class="auth-tab" onclick="switchTab('signup')">Create Account</button>
         </div>
-        <div>
-          <label class="field-label">Role</label>
-          <select class="field" id="loginRole"><option value="both">Both</option><option value="need-help">Need Help</option><option value="can-help">Can Help</option></select>
-        </div>
-        <div>
-          <label class="field-label">Email address</label>
-          <input type="email" class="field" id="loginEmail" placeholder="you@example.com"/>
-          <p class="field-error" id="loginEmailError"></p>
-        </div>
-        <div>
-          <label class="field-label">Password</label>
-          <input type="password" class="field" id="loginPassword" placeholder="••••••••"/>
-          <p class="field-error" id="loginPassError"></p>
-        </div>
-        <div id="signupExtraFields" style="display:none;" class="space-5">
-          <div>
-            <label class="field-label">Full Name</label>
-            <input type="text" class="field" id="signupName" placeholder="Muhammad Ali"/>
-            <p class="field-error" id="signupNameError"></p>
+
+        <!-- Login -->
+        <div id="loginForm" class="auth-form active">
+          <div style="margin-bottom:1rem;">
+            <label style="font-size:13px;font-weight:700;color:var(--text-700);display:block;margin-bottom:6px;">Email</label>
+            <input id="loginEmail" class="field" type="email" placeholder="you@example.com">
+            <p id="loginEmailError" class="field-error"></p>
           </div>
-          <div>
-            <label class="field-label">Create Password</label>
-            <input type="password" class="field" id="signupPassword" placeholder="Min 8 chars, Upper, Lower, Number"/>
-            <p class="field-error" id="signupPassError"></p>
+          <div style="margin-bottom:1.5rem;">
+            <label style="font-size:13px;font-weight:700;color:var(--text-700);display:block;margin-bottom:6px;">Password</label>
+            <input id="loginPassword" class="field" type="password" placeholder="Enter your password">
+            <p id="loginPassError" class="field-error"></p>
           </div>
-          <div>
-            <label class="field-label">Confirm Password</label>
-            <input type="password" class="field" id="signupConfirmPassword" placeholder="Re-enter your password"/>
-            <p class="field-error" id="signupConfirmError"></p>
-          </div>
+          <button class="btn-primary w-full" onclick="handleLogin()">Sign In</button>
         </div>
-        <button class="btn-primary w-full" id="loginBtn" onclick="handleLogin()">Continue to dashboard</button>
+
+        <!-- Signup -->
+        <div id="signupForm" class="auth-form">
+          <div style="margin-bottom:1rem;">
+            <label style="font-size:13px;font-weight:700;color:var(--text-700);display:block;margin-bottom:6px;">Full Name</label>
+            <input id="signupName" class="field" type="text" placeholder="Your full name">
+            <p id="signupNameError" class="field-error"></p>
+          </div>
+          <div style="margin-bottom:1rem;">
+            <label style="font-size:13px;font-weight:700;color:var(--text-700);display:block;margin-bottom:6px;">Email</label>
+            <input id="signupEmail" class="field" type="email" placeholder="you@example.com">
+            <p id="signupEmailError" class="field-error"></p>
+          </div>
+          <div style="margin-bottom:1rem;">
+            <label style="font-size:13px;font-weight:700;color:var(--text-700);display:block;margin-bottom:6px;">Password</label>
+            <input id="signupPassword" class="field" type="password" placeholder="Min 8 chars, 1 upper, 1 lower, 1 number">
+            <p id="signupPassError" class="field-error"></p>
+          </div>
+          <div style="margin-bottom:1rem;">
+            <label style="font-size:13px;font-weight:700;color:var(--text-700);display:block;margin-bottom:6px;">Confirm Password</label>
+            <input id="signupConfirmPassword" class="field" type="password" placeholder="Re-enter your password">
+            <p id="signupConfirmError" class="field-error"></p>
+          </div>
+          <div style="margin-bottom:1.5rem;">
+            <label style="font-size:13px;font-weight:700;color:var(--text-700);display:block;margin-bottom:6px;">I want to</label>
+            <select id="signupRole" class="field">
+              <option value="need-help">Get help</option>
+              <option value="can-help">Help others</option>
+              <option value="both">Both</option>
+            </select>
+          </div>
+          <button class="btn-primary w-full" onclick="handleSignup()">Create Account</button>
+        </div>
       </div>
+
     </div>
   </div>
 </div>
 
 <script src="app.js"></script>
 <script>
-currentPageName='login';
-// Agar pehle se logged in hai toh dashboard par bhej do
-if(isLoggedIn&&currentUserId){window.location.href='dashboard.html'}
+currentPageName = 'login';
+if (isLoggedIn && currentUserId) { window.location.href = 'dashboard.html' }
 renderNavbar('login');
 </script>
 </body>
