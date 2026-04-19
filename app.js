@@ -186,7 +186,7 @@ function markSolved(reqId) {
 // ============================================================
 function renderNavbar(activePage) {
     const publicLinks = [{ l: 'Home', p: 'index' }, { l: 'Explore', p: 'explore' }, { l: 'Leaderboard', p: 'leaderboard' }];
-    const authLinks = [{ l: 'Dashboard', p: 'dashboard' }, { l: 'Explore', p: 'explore' }, { l: 'Create Request', p: 'create' }, { l: 'Messages', p: 'messages' }, { l: 'Leaderboard', p: 'leaderboard' }, { l: 'Notifications', p: 'notifications' }, { l: 'Profile', p: 'profile' }];
+    const authLinks = [{ l: 'Dashboard', p: 'dashboard' }, { l: 'Explore', p: 'explore' }, { l: 'Create Request', p: 'create' }, { l: 'Messages', p: 'messages' }, { l: 'Leaderboard', p: 'leaderboard' }, { l: 'Notification', p: 'notification' }, { l: 'Profile', p: 'profile' }];
     const links = isLoggedIn ? authLinks : publicLinks;
     const navLinks = document.getElementById('navLinks');
     if (navLinks) navLinks.innerHTML = links.map(({ l, p }) => `<a class="nav-link${activePage === p ? ' active' : ''}" href="${p}.html">${l}</a>`).join('');
